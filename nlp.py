@@ -3,9 +3,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 import time
 t1=time.time()
-train = pd.read_csv('input/train_set.csv')[:100]
-test = pd.read_csv('input/test_set.csv')[:10]
-test_id = pd.read_csv('input/test_set.csv')[["id"]][:10].copy()
+train = pd.read_csv('input/train_set.csv')[:10]
+test = pd.read_csv('input/test_set.csv')[:1]
+test_id = pd.read_csv('input/test_set.csv')[["id"]][:1].copy()
 
 column="word_seg"
 # 用来查找数据的维度
