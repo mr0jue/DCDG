@@ -3,9 +3,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 import time
 t1=time.time()
-train = pd.read_csv('input/train_set.csv')
-test = pd.read_csv('input/test_set.csv')
-test_id = pd.read_csv('input/test_set.csv')[["id"]].copy()
+train = pd.read_csv('../data/train_set.csv')
+test = pd.read_csv('../data/test_set.csv')
+test_id = pd.read_csv('../data/test_set.csv')[["id"]].copy()
 
 column="word_seg"
 # 用来查找数据的维度
@@ -28,7 +28,7 @@ preds=clf.predict_proba(test_term_doc)
 test_prob=pd.DataFrame(preds)
 test_prob.columns=["class_prob_%s"%i for i in range(1,preds.shape[1]+1)]
 test_prob["id"]=list(test_id["id"])
-test_prob.to_csv('input/prob_lr_baseline.csv',index=None)
+test_prob.to_csv('../data/prob_lr_baseline.csv',index=None)
 
 #生成提交结果
 preds=np.argmax(preds,axis=1)
@@ -38,6 +38,6 @@ test_pred["class"]=(test_pred["class"]+1).astype(int)
 print(test_pred.shape)
 print(test_id.shape)
 test_pred["id"]=list(test_id["id"])
-test_pred[["id","class"]].to_csv('input/sub_lr_baseline.csv',index=None)
+test_pred[["id","class"]].to_csv('../data/sub_lr_baseline.csv',index=None)
 t2=time.time()
 print("time use:",t2-t1)

@@ -2,7 +2,7 @@ import pandas as pd
 import seaborn as sns  
 import matplotlib.plot as plt
 
-train=pd.read_csv("./data/train_set.csv")
+train=pd.read_csv("../data/train_set.csv")
 print("打印 train_set 的前五行：")
 print(train.head())
 
