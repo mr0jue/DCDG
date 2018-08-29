@@ -1,31 +1,26 @@
-import time, pandas as pd, numpy as np
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-from sklearn import svm
+import pandas as pd
+from scipy import sparse
+from time import time
+from sklearn.svm import LinearSVC
 
-t1=time.time()
+test_id=pd.read_csv('../data/test_set.csv')["id"]
+y=(pd.read_csv('../data/train_set.csv')["class"]-1).astype(int)
+trn_term_doc=sparse.load_npz('../data/trn_term_doc.npz')
+test_term_doc=sparse.load_npz('../data/test_term_doc.npz')
 
-train = pd.read_csv('../data/train_set.csv')
-test = pd.read_csv('../data/test_set.csv')
-test_id = test["id"].copy()
+t1=time()
 
-column = "word_seg"
+clf = LinearSVC()
+clf.fit(trn_term_doc, y)
+preds = clf.predict(test_term_doc)
 
-vec = TfidfVectorizer(ngram_range=(1,2),min_df=3, max_df=0.9,use_idf=1,smooth_idf=1, sublinear_tf=1)
-trn_term_doc = vec.fit_transform(train[column])
-test_term_doc = vec.transform(test[column])
+t2=time()
+print("svm time use:",t2-t1)
 
-y=(train["class"]-1).astype(int)
-lin_clf = svm.LinearSVC()
-lin_clf.fit(trn_term_doc,y)
-preds = lin_clf.predict(test_term_doc)
+test_pred=pd.DataFrame(preds)
+test_pred.columns=["class"]
+test_pred["class"]=(test_pred["class"]+1).astype(int)
+test_pred["id"]=test_id
+test_pred[["id","class"]].to_csv('../data/svm+tfidf_baseline.csv',index=None)
 
-fid=open('../data/tfidf+svm-submit.csv','w')
-i=0
-fid.write("id,class"+"\n")
-for item in preds:
-    fid.write(str(i)+","+str(item+1)+"\n")
-    i=i+1
-fid.close()
-
-t2=time.time()
-print("time use:",t2-t1)
+print("preds shape:",test_pred.shape)
