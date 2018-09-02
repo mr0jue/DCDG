@@ -3,10 +3,10 @@ from scipy import sparse
 from time import time
 from sklearn.svm import LinearSVC
 
-test_id=pd.read_csv('../data/test_set.csv')["id"]
-y=(pd.read_csv('../data/train_set.csv')["class"]-1).astype(int)
-trn_term_doc=sparse.load_npz('../data/trn_term_doc.npz')
-test_term_doc=sparse.load_npz('../data/test_term_doc.npz')
+test_id=pd.read_csv('../data/test_id.csv')["id"]
+y=pd.read_csv('../data/train_clas.csv')["class"]
+trn_term_doc=sparse.load_npz('../data/trn_term_doc_w10k.npz')
+test_term_doc=sparse.load_npz('../data/test_term_doc_w10k.npz')
 
 t1=time()
 
@@ -21,6 +21,6 @@ test_pred=pd.DataFrame(preds)
 test_pred.columns=["class"]
 test_pred["class"]=(test_pred["class"]+1).astype(int)
 test_pred["id"]=test_id
-test_pred[["id","class"]].to_csv('../data/svm+tfidf_baseline.csv',index=None)
+test_pred[["id","class"]].to_csv('../data/tfidf+svm_sub.csv',index=None)
 
 print("preds shape:",test_pred.shape)
