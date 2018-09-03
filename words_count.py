@@ -2,8 +2,8 @@ import pandas as pd
 from time import time
 
 column="word_seg"
-train = pd.read_csv('../data/train_w5k.csv')
-test = pd.read_csv('../data/test_w5k.csv')
+train = pd.read_csv('../data/train_set.csv')
+test = pd.read_csv('../data/test_set.csv')
 
 t1=time()
 wll=[wdl.split() for wdl in train[column]]
