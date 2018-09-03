@@ -4,8 +4,8 @@ from gensim.test.utils import get_tmpfile
 
 t1=time.time()
 
-train = pd.read_csv('../data/train_set.csv')
-test = pd.read_csv('../data/test_set.csv')
+train = pd.read_csv('../data/train_w5k.csv')
+test = pd.read_csv('../data/test_w5k.csv')
 column="word_seg"
 
 trn_doc=[sentence.split() for sentence in train[column]]
