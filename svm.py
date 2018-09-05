@@ -5,8 +5,8 @@ from sklearn.svm import LinearSVC
 
 test_id=pd.read_csv('../data/test_id.csv')["id"]
 y=pd.read_csv('../data/train_clas.csv')["class"]
-trn_term_doc=sparse.load_npz('../data/trn_term_doc_w5k_b5k.npz')
-test_term_doc=sparse.load_npz('../data/test_term_doc_w5k_b5k.npz')
+trn_term_doc=sparse.load_npz('../data/trn_term_doc2.npz')
+test_term_doc=sparse.load_npz('../data/test_term_doc2.npz')
 
 t1=time()
 
@@ -21,6 +21,6 @@ test_pred=pd.DataFrame(preds)
 test_pred.columns=["class"]
 test_pred["class"]=(test_pred["class"]+1).astype(int)
 test_pred["id"]=test_id
-test_pred[["id","class"]].to_csv('../data/tfidf+svm_w5k_b5k_sub.csv',index=None)
+test_pred[["id","class"]].to_csv('../data/tfidf+svm_sub2.csv',index=None)
 
 print("preds shape:",test_pred.shape)
